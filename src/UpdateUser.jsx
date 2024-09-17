@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
-function Signup() {
+function UpdateUser() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +12,7 @@ function Signup() {
   const handleSubmit = (e) => {
     console.log(e);
     e.preventDefault();
-    axios.post('http://localhost:3001/register', { name,email, password })
+    axios.post('http://localhost:3001/UpdateUser', { name,email, password })
       .then(res => {
         navigate('/login')
       })
@@ -23,7 +23,7 @@ function Signup() {
   return (
     <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
       <div className="bg-white p-3 rounded w-25">
-        <h2>Sign Up</h2>
+        <h2>Update User</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name">
@@ -67,13 +67,13 @@ function Signup() {
             />
           </div>
           <button type="submit" className="btn btn-success w-100 rounded-0">
-            Register
+            Update
           </button>
         </form>
-        <p>Already have an account? <Link to="/login">Login</Link></p>
+        <p>Already have an account ? <Link to="/login">Login</Link></p>
       </div>
     </div>
   );
 }
 
-export default Signup;
+export default UpdateUser;

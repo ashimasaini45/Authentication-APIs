@@ -8,9 +8,9 @@ function Dashboard(){
 
     useEffect(()=>{
         axios.post('http://localhost:3001/dashboard', { email, password })
-      .then(res => {
+      .then(res => { 
         if(res.data === "Success"){
-         
+             
               SetSuc("Successful ok")
           }else{
             navigate('/')

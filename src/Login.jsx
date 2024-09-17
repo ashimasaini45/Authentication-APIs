@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigate = useNavigate();
   
   axios.defaults.withCredentials = true;
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Handle Submit");
     axios.post('http://localhost:3001/login', { email, password })
       .then(res => {
-        if(res.data.Status === "Success"){
-          if(res.data.role === "admin"){
-              navigate('/dashboard')
+        if(res.data.status === "Success") {
+          navigate('/dashboard');
+          if (res.data.role === "admin") {
+            navigate('/home');
+          } else {
+            navigate('/');
           }
         }
-        
-       
       })
       .catch(err => console.log(err));
   };
@@ -48,19 +50,25 @@ function Login() {
               <strong>Password</strong>
             </label>
             <input
-              type="password"
-              placeholder="Enter Password"
-              name="password"
-              className="form-control rounded-0"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+             type="password"
+             placeholder="Enter Password"
+             name="password"
+             className="form-control rounded-0"
+             onChange={(e) => setPassword(e.target.value)}
+             required
+             autoComplete="current-password"  // Added this attribute
+           />
           </div>
-          <button type="submit" className="btn btn-success w-100 rounded-0">
+          <button onClick={handleSubmit} type="submit" className="btn btn-success w-100 rounded-0">
             Login
           </button>
         </form>
-        <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
+        <p>Don't have an account? 
+          <br />
+          <Link to="/register">Sign up</Link>
+      
+        </p>
+        <Link to="/forgot-password">Forgot Password</Link>
       </div>
     </div>
   );
